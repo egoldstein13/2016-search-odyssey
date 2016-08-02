@@ -31,7 +31,6 @@ public class WikiCrawler {
 	 */
 	public WikiCrawler(String source) {
 		this.source = source;
-		this.index = index;
 		queue.offer(source);
 	}
 
@@ -42,6 +41,10 @@ public class WikiCrawler {
 	 */
 	public int queueSize() {
 		return queue.size();	
+	}
+
+	public Queue<String> getQueue() {
+		return queue;
 	}
 
 	/**
@@ -60,11 +63,11 @@ public class WikiCrawler {
                         paragraphs=wf.readWikipedia(url);
                 }
                 else{
-                        if(index.isIndexed(url))
-                                return null;
+                        //if(index.isIndexed(url))
+                             //   return null;
                         paragraphs=wf.fetchWikipedia(url);
                 }
-                index.indexPage(url, paragraphs);
+                //index.indexPage(url, paragraphs);
                 queueInternalLinks(paragraphs);
                 return url;
         }
@@ -85,13 +88,18 @@ public class WikiCrawler {
                                         Elements links=((Element) node).select("a");
                                         for(Element f : links) {
                                                 url=((Element) node).attr("href");
-                                                if(url.startsWith("/wiki/"))
+                                                if(url.startsWith("/wiki/")) {
+                                                	if (queueSize() <= 100) {
                                                         queue.add("https://en.wikipedia.org"+url);
+                                                     } else {
+                                                     	return;
+                                                     }
+                                                }
                                         }
                                 }
                         }
                 }
-                System.out.println("size: "+queue.size());
+                //System.out.println("size: "+queue.size());
 
         }
 
@@ -104,16 +112,6 @@ public class WikiCrawler {
 		String source = "https://en.wikipedia.org/wiki/Java_(programming_language)";
 		WikiCrawler wc = new WikiCrawler(source);
 		
-		// loop until we index a new page
-		String res;
-		do {
-			res = wc.crawl(false);
-
-		} while (res == null);
 		
-		Map<String, Integer> map = index.getCounts("the");
-		for (Entry<String, Integer> entry: map.entrySet()) {
-			System.out.println(entry);
-		}
 	}
 }

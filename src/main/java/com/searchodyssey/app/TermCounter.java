@@ -4,10 +4,11 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-
+import java.util.Queue;
 import org.jsoup.nodes.Node;
 import org.jsoup.nodes.TextNode;
 import org.jsoup.select.Elements;
+import org.jsoup.nodes.Element;
 
 
 /**
@@ -68,10 +69,21 @@ public class TermCounter {
 	public void processTree(Node root) {
 		// NOTE: we could use select to find the TextNodes, but since
 		// we already have a tree iterator, let's use it.
+
 		for (Node node: new WikiNodeIterable(root)) {
+			if (node instanceof Element) {
+				Elements links=((Element) node).select("a");
+				int countLinksOnPage = 0;
+				for(Element f : links) {
+        			String url=((Element) node).attr("href");
+             		if(url.startsWith("/wiki/")) {
+             			countLinksOnPage++;
+             		}
+             	}
+			}
 			if (node instanceof TextNode) {
 				processText(((TextNode) node).text());
-				getLinks(((TextNode) node).text());
+				
 			}
 		}
 	}
@@ -91,10 +103,6 @@ public class TermCounter {
 		}
 	}
 	
-	public void getLinks(String text) {
-		// here is where we will parse to get linkNum
-		// if there is a link, count it
-	}
 
 	/**
 	 * Increments the counter associated with `term`.
@@ -152,13 +160,27 @@ public class TermCounter {
 	 * @throws IOException 
 	 */
 	public static void main(String[] args) throws IOException {
-		String url = "https://en.wikipedia.org/wiki/Java_(programming_language)";
-		
-		WikiFetcher wf = new WikiFetcher();
-		Elements paragraphs = wf.fetchWikipedia(url);
-		
-		TermCounter counter = new TermCounter(url.toString());
-		counter.processElements(paragraphs);
-		counter.printCounts();
+		String start = "https://en.wikipedia.org/wiki/Banana";
+		// create a crawler, crawl (should get 100 links) 
+		WikiCrawler wc = new WikiCrawler(start);
+		wc.crawl(false);
+		// grab the queue
+		Queue<String> queue = wc.getQueue();
+		// loop thorugh the queue of links we need to make term counters
+		while(wc.queueSize() > 0) {
+			String url = queue.remove();
+			// using wikifetcher for every link to actually get the paragraphs for that link
+			WikiFetcher wf = new WikiFetcher();
+			Elements paragraphs = wf.fetchWikipedia(url);
+			// then use termcounter to count the number of terms in each link
+			TermCounter counter = new TermCounter(url.toString());
+			counter.processElements(paragraphs);
+			counter.printCounts();
+		}
+
+		// then lets test it out
+
+		// then add to termcounter by adding a method that counts the number of links in each page
+		// then send count to the link you will be going to somehow (may have to wait to implement this when I have more time)
 	}
 }
