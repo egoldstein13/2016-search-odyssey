@@ -62,7 +62,6 @@
      <script type="text/javascript">
     $(document).ready(function () {
     var json=JSON.parse('<%=(String)request.getAttribute("json")%>');
-    var result = json.map(function(a) {return a.text;});
     var bubbleChart = new d3.svg.BubbleChart({
     supportResponsive: true,
     //container: => use @default
@@ -79,7 +78,6 @@
       items: json,
       eval: function (item) {return item.count;},
       classed: function (item) {return item.text.split(" ").join("");},
-      getText: function (item) {return item.text;}
 
     },
     plugins: [
@@ -97,7 +95,6 @@
           },
           attr: {dy: "65px"},
           centralClick: function(centralBubble) {
-            var self = this;
             var result = centralBubble.text;
             var text2=result.split(' ').join('_');
             var wiki="https://en.wikipedia.org/wiki/";
