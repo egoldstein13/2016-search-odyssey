@@ -16,7 +16,6 @@ public class WikiCrawler {
 	// keeps track of where we started
 	private final String source;
 	
-	
 	// queue of URLs to be indexed
 	private Queue<String> queue = new LinkedList<String>();
 	

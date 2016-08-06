@@ -128,7 +128,9 @@ public class JedisIndex {
 		}
 		return map;
 	}
-
+    public void flush(){
+        jedis.flushDB();
+    }
 	/**
 	 * Returns the number of times the given term appears at the given URL.
 	 * 
@@ -166,7 +168,7 @@ public class JedisIndex {
 	 * @return List of return values from Redis.
 	 */
 	public List<Object> pushTermCounterToRedis(TermCounter tc) {
-		Transaction t = jedis.multi();
+	    Transaction t = jedis.multi();
 		
 		String url = tc.getLabel();
 		String hashname = termCounterKey(url);
@@ -181,6 +183,7 @@ public class JedisIndex {
 			t.hset(hashname, term, count.toString());
 			t.sadd(urlSetKey(term), url);
 		}
+        
 		List<Object> res = t.exec();
 		return res;
 	}
