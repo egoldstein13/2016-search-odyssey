@@ -48,7 +48,7 @@ public class JedisMaker {
 	        Jedis jedis = new Jedis("pub-redis-14631.us-east-1-4.5.ec2.garantiadata.com", 14631);
 		try {
 		    //jedis.auth(auth);
-		    jedis.auth("password");
+		    jedis.auth("CodeUGooglers");
 		} catch (Exception e) {
 		    //System.out.println("Trying to connect to " + host);
 		    //	System.out.println("on port " + port);

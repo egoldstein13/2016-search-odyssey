@@ -218,8 +218,6 @@ public class TermCounter {
                     }
                 }
             }
-        
-        //print counts after
         for(String label : tcListMap.keySet()){
             tcListMap.get(label).printCounts();
         } 

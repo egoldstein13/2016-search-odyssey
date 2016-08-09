@@ -1,3 +1,5 @@
+com/searchodyssey/app/TermCounter.class
+com/searchodyssey/app/SearchServlet.class
 com/searchodyssey/app/WikiCrawler.class
 com/searchodyssey/app/WikiFetcher.class
 com/searchodyssey/app/WikiSearch.class
