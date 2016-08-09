@@ -26,13 +26,11 @@ public class TermCounter {
 	private Map<String, Integer> map;
     private Map<String, Integer> outLinkstoURLs;
 	private String label;
-	private int incomingLinkNum;
 	
 	public TermCounter(String label) {
 		this.label = label;
 		this.map = new HashMap<String, Integer>();
         this.outLinkstoURLs = new HashMap<String, Integer>();
-		this.incomingLinkNum = 0;
 	}
 	
 	public String getLabel() {
@@ -42,9 +40,7 @@ public class TermCounter {
 	public int getIncomingLinkNum() {
 		return incomingLinkNum;
 	}
-    public void incrementInLinkNum() {
-        incomingLinkNum++;
-    }
+
     public Map<String, Integer> getLinkMap(){
         return outLinkstoURLs;
     }
@@ -86,20 +82,18 @@ public class TermCounter {
 		// we already have a tree iterator, let's use it.
 
 		for (Node node: new WikiNodeIterable(root)) {
-			/*if (node instanceof Element) {
+			if (node instanceof Element) {
 				Elements links=((Element) node).select("a");
-				//int countLinksOnPage = 0;
 				for(Element f : links) {
         			String url=((Element) node).attr("href");
              		if(url.startsWith("/wiki/")) {
-             			//countLinksOnPage++;
                         url="https://en.wikipedia.org"+url;
                         Integer count = outLinkstoURLs.get(url);
                         Integer newCount = count == null ? 1 : (count+1);
                         outLinkstoURLs.put(url, newCount);
              		}
              	}
-			}*/
+			}
 			if (node instanceof TextNode) {
 				processText(((TextNode) node).text());
 			}
@@ -182,11 +176,12 @@ public class TermCounter {
 	public static void main(String[] args) throws IOException {
         Jedis jedis = JedisMaker.make();
         JedisIndex index = new JedisIndex(jedis);
-		String start = "https://en.wikipedia.org/wiki/Banana";
+		String start = "https://en.wikipedia.org/wiki/Space";
         
 		// create a crawler, crawl (should get 100 links) 
 		WikiCrawler wc = new WikiCrawler(start);
-        ArrayList<TermCounter> tcList = new ArrayList<TermCounter>();
+       // ArrayList<TermCounter> tcList = new ArrayList<TermCounter>();
+        private Map<String, TermCounter> tcListMap = new HashMap<String, TermCounter>();
         index.flush();
 		wc.crawl(false);
 		// grab the queue
@@ -202,27 +197,22 @@ public class TermCounter {
 			// then use termcounter to count the number of terms in each link
 			TermCounter counter = new TermCounter(url);
 			counter.processElements(paragraphs);
-            tcList.add(counter);
+			tcListMap.put(counter.label(), counter);
                 
 		}
         
-		/*  //print counts before
+		//print counts before
         for(TermCounter t : tcList){
             t.printCounts();
         }
-        //pseudocode for lines 211-219:
-        //for each termcounter in the ArrayList
-            //for each url in its outgoing link map
-                //for each termcounter in the ArrayList that isn't the current termcounter object
-                    //if the url of termcounter t equals the label of termcounter t2 (note: the label is the url)
-                        //then add 1 to all of the terms in termcounter t2
-        for(int i=0;i<tcList.size();i++){
-            TermCounter t = tcList.get(i);
+
+        for(String currLabel : tcListMap.keySet()){
+            TermCounter t = tcList.get(currLabel);
                 for(String url: t.getLinkMap().keySet()){
-                    for(int j=0; j<tcList.size();j++){
-                        TermCounter t2 = tcList.get(j);
+                    for(String otherLabel : tcListMap.keySet()){
+                        TermCounter t2 = tcList.get(otherLabel);
                         if(!t.equals(t2)){
-                            if(url.equals(t2.getLabel())){
+                            if(url.equals(otherLabel){
                                 for(String term : t2.keySet()){
                                     t2.incrementTermCount(term);
                                 }
@@ -233,16 +223,12 @@ public class TermCounter {
             }
         
         //print counts after
-        for(TermCounter t : tcList){
+        for(String label : tcListMap.keySet()){
             t.printCounts();
-        } */
-        for(TermCounter t : tcList){
-            System.out.println("Indexing " + t.getLabel());
-            index.pushTermCounterToRedis(t);
+        } 
+        for(String label : tcListMap.keySet()){
+            System.out.println("Indexing " + label);
+            index.pushTermCounterToRedis(tcListMap.get(label));
         }
-		// then lets test it out
-
-		// then add to termcounter by adding a method that counts the number of links in each page
-		// then send count to the link you will be going to somehow (may have to wait to implement this when I have more time)
 	}
 }
