@@ -207,7 +207,7 @@ public class TermCounter {
         }
 
         for(String currLabel : tcListMap.keySet()){
-            TermCounter t = tcList.get(currLabel);
+            TermCounter t = tcListMap.get(currLabel);
                 for(String url: t.getLinkMap().keySet()){
                     for(String otherLabel : tcListMap.keySet()){
                         TermCounter t2 = tcListMap.get(otherLabel);
