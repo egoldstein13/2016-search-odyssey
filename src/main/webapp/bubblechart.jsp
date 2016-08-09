@@ -60,9 +60,6 @@
     <script src="http://phuonghuynh.github.io/js/bower_components/bubble-chart/src/plugins/lines/lines.js"></script>
     
      <script type="text/javascript">
-    $.ajaxSetup({
-    async: false
-    });
     $(document).ready(function () {
     var json=JSON.parse('<%=(String)request.getAttribute("json")%>');
     var bubbleChart = new d3.svg.BubbleChart({
@@ -87,7 +84,7 @@
       {
         name: "central-click",
         options: {
-        text: "",
+          text: "",
           style: {
             "font-size": "12px",
             "font-style": "italic",

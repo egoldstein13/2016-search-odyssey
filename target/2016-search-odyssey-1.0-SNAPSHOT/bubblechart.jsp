@@ -77,13 +77,14 @@
     data: {
       items: json,
       eval: function (item) {return item.count;},
-      classed: function (item) {return item.text.split(" ").join("");}
+      classed: function (item) {return item.text.split(" ").join("");},
+
     },
     plugins: [
       {
         name: "central-click",
         options: {
-          text: "(See more detail)",
+          text: "",
           style: {
             "font-size": "12px",
             "font-style": "italic",
@@ -93,8 +94,13 @@
             "fill": "white"
           },
           attr: {dy: "65px"},
-          centralClick: function() {
-          }
+          centralClick: function(centralBubble) {
+            var result = centralBubble.text;
+            var result2 = result.split(' ').join('_');
+            var wiki = "https://en.wikipedia.org/wiki/";
+            var url = wiki.concat(result2);
+            window.location = url;
+            }
         }
       },
       {
@@ -147,7 +153,7 @@
   });
 });
 </script>
-    
+
  <div class="bubbleChart"> </div>
 
 </body>

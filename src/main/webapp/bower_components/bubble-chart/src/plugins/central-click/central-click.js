@@ -36,6 +36,7 @@ d3.svg.BubbleChart.define("central-click", function (options) {
     return function (node) {
       var fn = original.apply(this, arguments);
       var transition = self.getTransition().centralNode;
+    var nodeDatum = node.datum();
       transition.each("end", function() {
         node.append("text").classed({"central-click": true})
           .attr(options.attr)
