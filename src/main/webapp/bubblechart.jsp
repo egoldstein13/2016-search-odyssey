@@ -34,6 +34,12 @@
 	   display: inline;
 	   background-color: rgba(0,0,0,0.3);
 	  }
+    .doYouMean{
+     font-family: Source Sans Pro;
+     display: inline;
+     background-color: rgba(0,0,0,0.4);
+    }
+
 	
     </style>
     <!-- Custom CSS -->
@@ -45,9 +51,22 @@
 	<h1>2016: A Search Odyssey</h1>
             <form name="searchForm" action="Search" method="POST" style="display: inline;">
                 <input name="search" id="search" type="text" class="form-control" value="<%= request.getParameter("search")%>" />
-                <button type="submit" class="btn btn-dark1">Blastoff!</a>
+                <button type="submit" class="btn btn-dark1">Blastoff!</button></a>
     </form>
+
+
     </div>
+
+        <br>
+    <h4 class="doYouMean">
+      <%
+
+        String message = (String) request.getAttribute("phrase");
+        if (message != null) {
+        String newMessage = "Do you mean? ... " + message;
+      %>
+      <%=newMessage %> <%} %>
+    </h4>
     <script src="http://phuonghuynh.github.io/js/bower_components/jquery/dist/jquery.min.js"></script>
     <script src="http://phuonghuynh.github.io/js/bower_components/d3/d3.min.js"></script>
     <script src="http://phuonghuynh.github.io/js/bower_components/d3-transform/src/d3-transform.js"></script>
@@ -61,7 +80,9 @@
     
      <script type="text/javascript">
     $(document).ready(function () {
+
     var json=JSON.parse('<%=(String)request.getAttribute("json")%>');
+
     var bubbleChart = new d3.svg.BubbleChart({
     supportResponsive: true,
     //container: => use @default
