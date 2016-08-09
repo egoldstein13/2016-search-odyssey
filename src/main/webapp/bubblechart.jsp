@@ -34,7 +34,14 @@
 	   display: inline;
 	   background-color: rgba(0,0,0,0.3);
 	  }
-	
+    canvas{
+        position:absolute;
+        left:0;
+        top:0;
+        z-index:0;
+        border:0px solid #000;
+    }
+
     </style>
     <!-- Custom CSS -->
     <link href="css/stylish-portfolio1.css" rel="stylesheet">
@@ -46,8 +53,11 @@
             <form name="searchForm" action="Search" method="POST" style="display: inline;">
                 <input name="search" id="search" type="text" class="form-control" value="<%= request.getParameter("search")%>" />
                 <button type="submit" class="btn btn-dark1">Blastoff!</a>
-    </form>
-    </div>
+            </form>
+</div>
+<div id="canvasdiv" style="visibility:hidden">
+    <canvas id="canvas"></canvas>
+</div>
     <script src="http://phuonghuynh.github.io/js/bower_components/jquery/dist/jquery.min.js"></script>
     <script src="http://phuonghuynh.github.io/js/bower_components/d3/d3.min.js"></script>
     <script src="http://phuonghuynh.github.io/js/bower_components/d3-transform/src/d3-transform.js"></script>
@@ -58,9 +68,12 @@
     <script src="http://phuonghuynh.github.io/js/bower_components/bubble-chart/src/bubble-chart.js"></script>
     <script src="bower_components/bubble-chart/src/plugins/central-click/central-click.js"></script>
     <script src="http://phuonghuynh.github.io/js/bower_components/bubble-chart/src/plugins/lines/lines.js"></script>
-    
+    <script src="js/confetti.js"></script>
+
+
      <script type="text/javascript">
     $(document).ready(function () {
+    var search ='<%=(String)request.getParameter("search")%>';
     var json=JSON.parse('<%=(String)request.getAttribute("json")%>');
     var bubbleChart = new d3.svg.BubbleChart({
     supportResponsive: true,
@@ -151,7 +164,17 @@
         }
       }]
   });
+    checkConfetti(search);
 });
+function checkConfetti(search){
+    if(search == 'party'){
+        document.getElementById("canvasdiv").style.visibility="visible";
+    }
+}
+
+
+
+
 </script>
 
  <div class="bubbleChart"> </div>
