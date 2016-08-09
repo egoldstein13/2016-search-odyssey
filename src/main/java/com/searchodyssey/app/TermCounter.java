@@ -220,6 +220,7 @@ public class TermCounter {
                 }
             }
 
+        // print counts after
         System.out.println("******************************************************************************************************");
         for(String label : tcListMap.keySet()){
         	System.out.println("COUNTING FOR:" + label);
