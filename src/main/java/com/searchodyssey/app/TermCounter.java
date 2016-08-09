@@ -212,7 +212,7 @@ public class TermCounter {
                     for(String otherLabel : tcListMap.keySet()){
                         TermCounter t2 = tcListMap.get(otherLabel);
                         if(!t.equals(t2)){
-                            if(url.equals(otherLabel){
+                            if(url.equals(otherLabel)){
                                 for(String term : t2.keySet()){
                                     t2.incrementTermCount(term);
                                 }
