@@ -197,7 +197,7 @@ public class TermCounter {
 			// then use termcounter to count the number of terms in each link
 			TermCounter counter = new TermCounter(url);
 			counter.processElements(paragraphs);
-			tcListMap.put(counter.label(), counter);
+			tcListMap.put(counter.label, counter);
                 
 		}
         
