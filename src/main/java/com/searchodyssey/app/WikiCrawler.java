@@ -88,7 +88,7 @@ public class WikiCrawler {
                                         for(Element f : links) {
                                                 url=((Element) node).attr("href");
                                                 if(url.startsWith("/wiki/")) {
-                                                	if (queueSize() <= 100) {
+                                                	if (queueSize() <= 2) {
                                                         queue.add("https://en.wikipedia.org"+url);
                                                      } else {
                                                      	return;
