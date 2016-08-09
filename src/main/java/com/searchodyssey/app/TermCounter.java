@@ -219,6 +219,7 @@ public class TermCounter {
                 }
             }
 
+        System.out.println("******************************************************************************************************");
         for(String label : tcListMap.keySet()){
             tcListMap.get(label).printCounts();
         } 
