@@ -37,9 +37,6 @@ public class TermCounter {
 		return label;
 	}
 	
-	public int getIncomingLinkNum() {
-		return incomingLinkNum;
-	}
 
     public Map<String, Integer> getLinkMap(){
         return outLinkstoURLs;
