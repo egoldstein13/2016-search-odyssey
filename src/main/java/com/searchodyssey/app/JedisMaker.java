@@ -22,38 +22,10 @@ public class JedisMaker {
 	 * @throws IOException
 	 */
 	public static Jedis make() throws IOException {
-
-	    /*URI uri;
-		try {
-		    //uri = new URI(sb.toString());
-		    uri = new URI("redis://redistogo:1276999711ba880254b62b41886371b8@viperfish.redistogo.com:10836/");
-		} catch (URISyntaxException e) {
-		    //System.out.println("Reading file: " + filename);
-		    //	System.out.println("It looks like this file does not contain a valid URI.");
-			printInstructions();
-			return null;
-		}
-		String host = uri.getHost();
-		int port = uri.getPort();
-
-		String[] array = uri.getAuthority().split("[:@]");
-		String auth = array[1];
-
-		//Here's an older version that read the auth code from an environment variable.
-		//String host = "dory.redistogo.com";
-		//int port = 10534;
-		//String auth = System.getenv("REDISTOGO_AUTH");
-
-		Jedis jedis = new Jedis(host, port);*/
 	        Jedis jedis = new Jedis("pub-redis-14631.us-east-1-4.5.ec2.garantiadata.com", 14631);
 		try {
-		    //jedis.auth(auth);
 		    jedis.auth("CodeUGooglers");
 		} catch (Exception e) {
-		    //System.out.println("Trying to connect to " + host);
-		    //	System.out.println("on port " + port);
-		    //	System.out.println("with authcode " + auth);
-		    //	System.out.println("Got exception " + e);
 		    	printInstructions();
 			return null;
 		}

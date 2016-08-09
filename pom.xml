@@ -146,9 +146,6 @@
         </plugins>
         <resources>
             <resource>
-                <directory>src/main/java/resources</directory>
-            </resource>
-            <resource>
                  <directory>src/main/webapp</directory>
             </resource>
         </resources>
