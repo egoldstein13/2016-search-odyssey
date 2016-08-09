@@ -224,7 +224,7 @@ public class TermCounter {
         
         //print counts after
         for(String label : tcListMap.keySet()){
-            t.printCounts();
+            tcListMap.get(label).printCounts();
         } 
         for(String label : tcListMap.keySet()){
             System.out.println("Indexing " + label);
