@@ -173,7 +173,7 @@ public class TermCounter {
 	public static void main(String[] args) throws IOException {
         Jedis jedis = JedisMaker.make();
         JedisIndex index = new JedisIndex(jedis);
-		String start = "https://en.wikipedia.org/wiki/Space";
+		String start = "https://en.wikipedia.org/wiki/banana";
         
 		// create a crawler, crawl (should get 100 links) 
 		WikiCrawler wc = new WikiCrawler(start);
@@ -218,6 +218,7 @@ public class TermCounter {
                     }
                 }
             }
+
         for(String label : tcListMap.keySet()){
             tcListMap.get(label).printCounts();
         } 
