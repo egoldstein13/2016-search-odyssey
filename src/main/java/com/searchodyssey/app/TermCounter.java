@@ -181,7 +181,7 @@ public class TermCounter {
 		// create a crawler, crawl (should get 100 links) 
 		WikiCrawler wc = new WikiCrawler(start);
        // ArrayList<TermCounter> tcList = new ArrayList<TermCounter>();
-        private Map<String, TermCounter> tcListMap = new HashMap<String, TermCounter>();
+        Map<String, TermCounter> tcListMap = new HashMap<String, TermCounter>();
         index.flush();
 		wc.crawl(false);
 		// grab the queue
