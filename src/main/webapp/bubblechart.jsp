@@ -60,6 +60,9 @@
     <script src="http://phuonghuynh.github.io/js/bower_components/bubble-chart/src/plugins/lines/lines.js"></script>
     
      <script type="text/javascript">
+    $.ajaxSetup({
+    async: false
+    });
     $(document).ready(function () {
     var json=JSON.parse('<%=(String)request.getAttribute("json")%>');
     var bubbleChart = new d3.svg.BubbleChart({
@@ -84,7 +87,7 @@
       {
         name: "central-click",
         options: {
-          text: "(See more detail)",
+        text: "",
           style: {
             "font-size": "12px",
             "font-style": "italic",
@@ -96,9 +99,9 @@
           attr: {dy: "65px"},
           centralClick: function(centralBubble) {
             var result = centralBubble.text;
-            var text2=result.split(' ').join('_');
-            var wiki="https://en.wikipedia.org/wiki/";
-            var url = wiki.concat(text2);
+            var result2 = result.split(' ').join('_');
+            var wiki = "https://en.wikipedia.org/wiki/";
+            var url = wiki.concat(result2);
             window.location = url;
             }
         }
@@ -153,7 +156,7 @@
   });
 });
 </script>
-    
+
  <div class="bubbleChart"> </div>
 
 </body>
