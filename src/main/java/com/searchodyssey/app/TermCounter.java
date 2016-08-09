@@ -202,7 +202,7 @@ public class TermCounter {
 		}
         
 		//print counts before
-        for(String label : tcListMap){
+        for(String label : tcListMap.keySet()){
             tcListMap.get(label).printCounts();
         }
 
