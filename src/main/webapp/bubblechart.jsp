@@ -42,6 +42,13 @@
         border:0px solid #000;
     }
 
+    .doYouMean{
+     font-family: Source Sans Pro;
+     display: inline;
+     background-color: rgba(0,0,0,0.4);
+    }
+
+
     </style>
     <!-- Custom CSS -->
     <link href="css/stylish-portfolio1.css" rel="stylesheet">
@@ -55,9 +62,20 @@
                 <button type="submit" class="btn btn-dark1">Blastoff!</a>
             </form>
 </div>
+
 <div id="canvasdiv" style="visibility:hidden">
     <canvas id="canvas"></canvas>
 </div>
+        <br>
+    <h4 class="doYouMean">
+      <%
+
+        String message = (String) request.getAttribute("phrase");
+        if (message != null) {
+        String newMessage = "Do you mean? ... " + message;
+      %>
+      <%=newMessage %> <%} %>
+    </h4>
     <script src="http://phuonghuynh.github.io/js/bower_components/jquery/dist/jquery.min.js"></script>
     <script src="http://phuonghuynh.github.io/js/bower_components/d3/d3.min.js"></script>
     <script src="http://phuonghuynh.github.io/js/bower_components/d3-transform/src/d3-transform.js"></script>
@@ -75,6 +93,7 @@
     $(document).ready(function () {
     var search ='<%=(String)request.getParameter("search")%>';
     var json=JSON.parse('<%=(String)request.getAttribute("json")%>');
+
     var bubbleChart = new d3.svg.BubbleChart({
     supportResponsive: true,
     //container: => use @default

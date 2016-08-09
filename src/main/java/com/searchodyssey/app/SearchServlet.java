@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.HashMap;
 
 import com.google.gson.Gson;
 import java.net.HttpURLConnection;
@@ -45,9 +46,25 @@ public class SearchServlet extends HttpServlet {
 			  HttpServletResponse response) throws ServletException, IOException{
 
         String search = request.getParameter("search");
+
+        // HashMap for Easter Egg
+        Map<String, String> doYouMean = new HashMap<String, String>();
+        // hardcode in terms associated with Phrases
+        doYouMean.put("galaxy", "In a galaxy far far away...");
+        doYouMean.put("party", "PARTYYYYYYY!!!");
+        doYouMean.put("star", "twinkle twinkle little star");
+        doYouMean.put("comet", "A comet is headed for Earth in T-minus 5 seconds");
+        doYouMean.put("Zeus", "Zeus is a jerk =(");
+
+        if (doYouMean.get(search)!= null) {
+            request.setAttribute("phrase", doYouMean.get(search));
+        } 
+
       	// make a JedisIndex
        	Jedis jedis = JedisMaker.make();
         JedisIndex index = new JedisIndex(jedis);
+
+
 	
         WikiSearch search1 = WikiSearch.search(search, index);
         
