@@ -238,6 +238,11 @@ public class TermCounter {
 
         } 
 
+        for (String label: tcListMap.keySet()) {
+            System.out.println("Indexing " + label);
+            index.pushTermCounterToRedis(tcListMap.get(label));
+        }
+
 	}
 }
 
