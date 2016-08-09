@@ -202,8 +202,8 @@ public class TermCounter {
 		}
         
 		//print counts before
-        for(TermCounter t : tcList){
-            t.printCounts();
+        for(String label : tcListMap){
+            tcListMap.get(label).printCounts();
         }
 
         for(String currLabel : tcListMap.keySet()){
