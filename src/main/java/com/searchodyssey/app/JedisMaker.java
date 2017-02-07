@@ -22,9 +22,9 @@ public class JedisMaker {
 	 * @throws IOException
 	 */
 	public static Jedis make() throws IOException {
-	        Jedis jedis = new Jedis("pub-redis-14631.us-east-1-4.5.ec2.garantiadata.com", 14631);
+	        Jedis jedis = new Jedis("koi.redistogo.com", 10829);
 		try {
-		    jedis.auth("CodeUGooglers");
+		    jedis.auth("a660afb9280aeb5f22207adcf8d5fb38");
 		} catch (Exception e) {
 		    	printInstructions();
 			return null;
